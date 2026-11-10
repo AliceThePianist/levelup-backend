@@ -1,3 +1,10 @@
 spring:
   application:
     name: levelup-backend
+  datasource:
+    url: jdbc:postgresql://localhost:5432/levelup_db
+    username: ${DB_USERNAME}
+    password: ${DB_PASSWORD}
+  jpa:
+    hibernate:
+      ddl-auto: update
