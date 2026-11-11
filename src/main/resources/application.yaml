@@ -11,3 +11,8 @@ spring:
   jackson:
     deserialization:
       accept-float-as-int: false
+
+security:
+  jwt:
+    secret: ${JWT_SECRET}
+    duracion-segundos: 3600
