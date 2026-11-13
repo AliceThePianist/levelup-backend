@@ -46,6 +46,7 @@ import static org.mockito.Mockito.when;
 import static org.springframework.security.test.web.servlet.setup.SecurityMockMvcConfigurers.springSecurity;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.options;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.header;
@@ -98,6 +99,19 @@ class SeguridadApiTest {
             .andExpect(status().isUnauthorized());
 
         String ruta = "/api/productos";
+        String origenLocal = "http://localhost:5173";
+        mvc.perform(options(ruta)
+                .header(HttpHeaders.ORIGIN, origenLocal)
+                .header(HttpHeaders.ACCESS_CONTROL_REQUEST_METHOD, "POST")
+                .header(HttpHeaders.ACCESS_CONTROL_REQUEST_HEADERS, "authorization,content-type"))
+            .andExpect(status().isOk())
+            .andExpect(header().string(HttpHeaders.ACCESS_CONTROL_ALLOW_ORIGIN, origenLocal));
+        mvc.perform(options(ruta)
+                .header(HttpHeaders.ORIGIN, "https://externo.example")
+                .header(HttpHeaders.ACCESS_CONTROL_REQUEST_METHOD, "POST"))
+            .andExpect(status().isForbidden())
+            .andExpect(header().doesNotExist(HttpHeaders.ACCESS_CONTROL_ALLOW_ORIGIN));
+
         String datos = """
             {"nombre":"Mando","descripcion":"Producto local","categoria":"Accesorios",
              "precio":19.90,"stock":2,"imagen":"/assets/mando.png"}

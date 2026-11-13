@@ -12,6 +12,10 @@ spring:
     deserialization:
       accept-float-as-int: false
 
+app:
+  cors:
+    origenes: ${FRONTEND_ORIGINS:http://localhost:5173,http://127.0.0.1:5173}
+
 security:
   jwt:
     secret: ${JWT_SECRET}
