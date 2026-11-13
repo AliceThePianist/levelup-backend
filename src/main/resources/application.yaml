@@ -5,6 +5,11 @@ spring:
     url: jdbc:postgresql://localhost:5432/levelup_db
     username: ${DB_USERNAME}
     password: ${DB_PASSWORD}
+  servlet:
+    multipart:
+      max-file-size: 5MB
+      max-request-size: 6MB
+      resolve-lazily: true
   jpa:
     hibernate:
       ddl-auto: update
@@ -13,6 +18,8 @@ spring:
       accept-float-as-int: false
 
 app:
+  imagenes:
+    directorio: ${IMAGES_DIR:./imagenes}
   cors:
     origenes: ${FRONTEND_ORIGINS:http://localhost:5173,http://127.0.0.1:5173}
 

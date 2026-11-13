@@ -46,3 +46,6 @@ application-local.yaml
 *.jks
 *.p12
 *.pfx
+
+# Imágenes almacenadas localmente en ejecución
+/imagenes/

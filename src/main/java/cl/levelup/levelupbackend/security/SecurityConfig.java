@@ -84,8 +84,9 @@ public class SecurityConfig {
             .authorizeHttpRequests(rutas -> rutas
                 .dispatcherTypeMatchers(DispatcherType.ERROR).permitAll()
                 .requestMatchers(HttpMethod.POST, "/api/auth/registro", "/api/auth/login").permitAll()
-                .requestMatchers(HttpMethod.GET, "/api/productos", "/api/productos/{id}").permitAll()
-                .requestMatchers(HttpMethod.POST, "/api/productos").hasRole(administrador)
+                .requestMatchers(HttpMethod.GET, "/api/productos", "/api/productos/{id}", "/api/imagenes/{nombre}").permitAll()
+                .requestMatchers(HttpMethod.HEAD, "/api/imagenes/{nombre}").permitAll()
+                .requestMatchers(HttpMethod.POST, "/api/productos", "/api/imagenes").hasRole(administrador)
                 .requestMatchers(HttpMethod.PUT, "/api/productos/{id}").hasRole(administrador)
                 .requestMatchers(HttpMethod.DELETE, "/api/productos/{id}").hasRole(administrador)
                 .anyRequest().denyAll()
